@@ -2,58 +2,101 @@
 #define _CONFIG_H_
 
 // disable e.g. if roms are missing
-#define ENABLE_PACMAN
+// #define ENABLE_PACMAN
 #define ENABLE_GALAGA
-#define ENABLE_DKONG
-#define ENABLE_FROGGER
-#define ENABLE_DIGDUG
+// #define ENABLE_DKONG
+// #define ENABLE_FROGGER
+// #define ENABLE_DIGDUG
 
 #if !defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)
 #error "At least one machine has to be enabled!"
 #endif
 
 // check if only one machine is enabled
-#if (( defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
-     (!defined(ENABLE_PACMAN) &&  defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
-     (!defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) &&  defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
-     (!defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) &&  defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
-     (!defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) &&  defined(ENABLE_DIGDUG)))
-  #define SINGLE_MACHINE
+#if ((defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
+     (!defined(ENABLE_PACMAN) && defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
+     (!defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
+     (!defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)) || \
+     (!defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && defined(ENABLE_DIGDUG)))
+#define SINGLE_MACHINE
 #endif
 
 // game config
 
-#define MASTER_ATTRACT_MENU_TIMEOUT  20000   // start games randomly while sitting idle in menu for 20 seconds, undefine to disable
+#define MASTER_ATTRACT_MENU_TIMEOUT 20000 // start games randomly while sitting idle in menu for 20 seconds, undefine to disable
 
 #include "dip_switches.h"
 
-// video config
-#define TFT_SPICLK  40000000    // 40 Mhz. Some displays cope with 80 Mhz
+#define CHEAP_YELLOW_DISPLAY_CONF
 
-#define TFT_CS   5
-#define TFT_DC  32
+#ifndef CHEAP_YELLOW_DISPLAY_CONF // Config as it was before
+
+// video config
+#define TFT_SPICLK 40000000 // 40 Mhz. Some displays cope with 80 Mhz
+
+#define TFT_CS 5
+#define TFT_DC 32
 #define TFT_RST 27
-#define TFT_BL  13    // don't set if backlight is hard wired
-#define TFT_ILI9341   // define for ili9341, otherwise st7789
+#define TFT_BL 13   // don't set if backlight is hard wired
+#define TFT_ILI9341 // define for ili9341, otherwise st7789
 // #define TFT_VFLIP     // define for upside down
 
 // x and y offset of 224x288 pixels inside the 240x320 screen
-#define TFT_X_OFFSET  8
+#define TFT_X_OFFSET 8
 #define TFT_Y_OFFSET 16
 
-#define LED_PIN        16   // pin used for optional WS2812 stripe
-#define LED_BRIGHTNESS 50   // range 0..255
+#define LED_PIN 16        // pin used for optional WS2812 stripe
+#define LED_BRIGHTNESS 50 // range 0..255
 
 // audio config
 // #define SND_DIFF   // set to output differential audio on GPIO25 _and_ inverted on GPIO26
 
 // Pins used for buttons
-#define BTN_START_PIN  22
-#define BTN_COIN_PIN   21   // if this is not defined, then start will act as coin & start
-#define BTN_LEFT_PIN   33
-#define BTN_RIGHT_PIN  14
-#define BTN_DOWN_PIN   15
-#define BTN_UP_PIN      4
-#define BTN_FIRE_PIN   12
+#define BTN_START_PIN 22
+#define BTN_COIN_PIN 21 // if this is not defined, then start will act as coin & start
+#define BTN_LEFT_PIN 33
+#define BTN_RIGHT_PIN 14
+#define BTN_DOWN_PIN 15
+#define BTN_UP_PIN 4
+#define BTN_FIRE_PIN 12
+
+#else                       // Cheap Yellow Display Conf
+
+// video config
+#define TFT_SPICLK 40000000 // 40 Mhz. Some displays cope with 80 Mhz
+
+#define TFT_MISO 12
+#define TFT_MOSI 13
+#define TFT_SCLK 14
+
+#define TFT_CS 15
+#define TFT_DC 2
+#define TFT_RST -1
+#define TFT_BL 21   // don't set if backlight is hard wired
+#define TFT_ILI9341 // define for ili9341, otherwise st7789
+// #define TFT_VFLIP   // define for upside down
+
+// x and y offset of 224x288 pixels inside the 240x320 screen
+#define TFT_X_OFFSET 8
+#define TFT_Y_OFFSET 16
+
+#define LED_PIN 16        // pin used for optional WS2812 stripe
+#define LED_BRIGHTNESS 50 // range 0..255
+
+// audio config
+// #define SND_DIFF   // set to output differential audio on GPIO25 _and_ inverted on GPIO26
+
+#define NUNCHUCK_INPUT
+
+#define NUNCHUCK_SDA 22
+#define NUNCHUCK_SCL 27
+
+#define NUNCHUCK_MOVE_THRESHOLD 30 // This is the dead-zone for where minor movements on the stick will not be considered valid movements
+
+// Pins used for buttons
+#define BTN_START_PIN 0
+// #define BTN_COIN_PIN 21 // if this is not defined, then start will act as coin & start
+
+#endif // #ifndef CHEAP_YELLOW_DISPLAY_CONF
 
 #endif // _CONFIG_H_
