@@ -2,11 +2,11 @@
 #define _CONFIG_H_
 
 // disable e.g. if roms are missing
-// #define ENABLE_PACMAN
+#define ENABLE_PACMAN
 #define ENABLE_GALAGA
-// #define ENABLE_DKONG
-// #define ENABLE_FROGGER
-// #define ENABLE_DIGDUG
+#define ENABLE_DKONG
+#define ENABLE_FROGGER
+#define ENABLE_DIGDUG
 
 #if !defined(ENABLE_PACMAN) && !defined(ENABLE_GALAGA) && !defined(ENABLE_DKONG) && !defined(ENABLE_FROGGER) && !defined(ENABLE_DIGDUG)
 #error "At least one machine has to be enabled!"
@@ -27,7 +27,7 @@
 
 #include "dip_switches.h"
 
-#define CHEAP_YELLOW_DISPLAY_CONF
+// #define CHEAP_YELLOW_DISPLAY_CONF
 
 #ifndef CHEAP_YELLOW_DISPLAY_CONF // Config as it was before
 
